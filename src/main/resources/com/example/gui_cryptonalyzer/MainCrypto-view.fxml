@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gui_cryptonalyzer.MainController">
+   <children>
+      <ImageView fx:id="cesarEncryptButton" fitHeight="480.0" fitWidth="160.0" onMouseClicked="#initialize" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../CesarEnc.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="cesarDecryptButton" fitHeight="480.0" fitWidth="160.0" layoutX="160.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../CesarDec.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="bruteForceButton" fitHeight="480.0" fitWidth="160.0" layoutX="320.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../Billy.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="statAnalButton" fitHeight="480.0" fitWidth="160.0" layoutX="480.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../analysis.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+   </children>
+</AnchorPane>
