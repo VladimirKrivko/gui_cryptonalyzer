@@ -9,20 +9,22 @@ public class Cipher {
     public static String fileOutputName;
     public static int encryptKey;
 
-    //public static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-    static final public char[] alphabetRus = {'A', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У'
+    /*static final public char[] alphabetRus = {'A', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У'
             , 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л'
-            , 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я', '.', ' ', '"', ':', '-', '!', ',', '?'};
-    //static final public char[] alphabetRus = "AБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ-!,?абвгдеёжзийклмнопрстуфхцчшщъыьэюя. \":".toCharArray();
+            , 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я', '.', ' ', '"', ':', '-', '!', ',', '?'};*/
+    static final public char[] alphabetRus = "AБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ-!,?абвгдеёжзийклмнопрстуфхцчшщъыьэюя. \":".toCharArray();
 
+    //Первые 11 самых популярных букв русского алфавита в порядке убывания согласно статьи "Частотность" Википедия.
+    //Пробел включен по условию и является самым популярным символом практически любого языка.
     public static char[] popLetterRus = " оеаинтсрвл".toCharArray();
 
+    //Метод задает путь исходящего файла рядом с исходным с припиской к имени "_CRYPT".
     public static void setFileOutputName (String fileInputName) {
         fileOutputName = fileInputName.substring(0, fileInputName.lastIndexOf(".")) +
                 "_CRYPT" + fileInputName.substring(fileInputName.lastIndexOf("."));
     }
 
+    //Метод возвращает текст входящего файла.
     public static String getTextFromFile(String fileName) throws IOException {
         try (FileInputStream fis = new FileInputStream(fileName);
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -34,13 +36,14 @@ public class Cipher {
         }
     }
 
+    //Метод записывает текст в исходящий файл.
     public static void pushTextToFile(String text) throws IOException {
         try (FileWriter fw = new FileWriter(fileOutputName)) {
             fw.write(text);
-            //System.out.println("The file is saved at: " + fileOutputName);
         }
     }
 
+    //Метод вохвращает шифрованный текст, смещение происходит по ключу записанному в статическую переменную encryptKey.
     public static String encrypt(String inputText) throws IOException {
 
         char[] text = inputText.toCharArray();
@@ -67,6 +70,9 @@ public class Cipher {
         return new String(result);
     }
 
+    //Метод BruteForce делает смещение текста на 1 и подсчитывает колличество вхождений ", "
+    //Ключ при котором было максимальное колличество вхождений ", " является правильным.
+    //Можно добавить еще критерии отбора, но и этого достаточно.
     public static String bruteForce(String inputText, String popularLetter) throws IOException {
 
         int decryptKey = 0;
@@ -90,6 +96,8 @@ public class Cipher {
         return encrypt(inputText);
     }
 
+    //Метод возвращает ключ при котором самые популярные шифрованные буквы текста становятся самыми популярными буквами открытого текста.
+    //Если не загружать другой текст того же автора, то в popLettersOpenTextAuthor передается стандартная частотность букв " оеаинтсрвл".
     public static int statAnal(char[] popLettersOpenTextAuthor, char[] popLettersCipherText) throws IOException {
 
         int[] keys = new int[popLettersOpenTextAuthor.length];
@@ -98,8 +106,6 @@ public class Cipher {
 
             for (indexAlphabet = 0; indexAlphabet < alphabetRus.length; indexAlphabet++) {      // получить индекс шифросимвола в массиве алфавита.
                 if (alphabetRus[indexAlphabet] == popLettersCipherText[i]) {
-//                    indexAlphabet = indexAlphabet;
-//                    System.out.println("Индекс шифробуквы " + popLettersCipherText[i] + " в алфавите: " + indexAlphabet);
                     break;
                 }
             }
@@ -116,7 +122,7 @@ public class Cipher {
                 }
             }
         }
-//        System.out.println(Arrays.toString(keys));
+        //Получив массив ключей, нахожу ключ который повторяется больше других.
         int key = 0;
         int maxRepeatKey = 0;
 
@@ -132,37 +138,24 @@ public class Cipher {
                 key = keys[i];
             }
         }
-//        System.out.println(key);
         return key;
     }
 
-
+    //Честно нашел этот метод в интернетах, использовал его собсна в bruteForce и frequencyOfLetters для подсчета вхождений подстроки fragment в строку text.
     public static int countFragmentInText(String text, String fragment) {
         return (text.length() - text.replace(fragment, "").length()) / fragment.length();
     }
 
-    public String getFileInputName() {
-        return fileInputName;
-    }
-
-    public String getFileOutputName() {
-        return fileOutputName;
-    }
-
-    public static void setEncryptKey(int encryptKey) {
-        Cipher.encryptKey = encryptKey;
-    }
-
+    //Метод находит 11 самых популярных букв в тексте в порядке убывания.
+    //Компаратор для HashMap сам не написал, нашел на просторах интернетов.
+    //В Мапу добавляется ключ-буква и значение-количество ее повторения в тексте. Мапа сортируется в порядке убывания по значению.
     public static char[] frequencyOfLetters (String inputText) {
-        String text = inputText;
         char[] popLetterInText = new char[11];
 
         Map<Character, Integer> unsortedMap = new HashMap<>();
         for (int i = 0; i < alphabetRus.length; i++) {
-            unsortedMap.put(alphabetRus[i], countFragmentInText(text, String.valueOf(alphabetRus[i])));
+            unsortedMap.put(alphabetRus[i], countFragmentInText(inputText, String.valueOf(alphabetRus[i])));
         }
-//        unsortedMap.entrySet().forEach(System.out::println);
-//        System.out.println("___________________________");
         Map<Character, Integer> sortedMap = unsortedMap.entrySet().stream()
                 .sorted(Comparator.comparingInt(e -> -e.getValue()))
                 .collect(Collectors.toMap(
@@ -173,7 +166,6 @@ public class Cipher {
                         },
                         LinkedHashMap::new
                 ));
-//        sortedMap.entrySet().forEach(System.out::println);
         int index = 0;
         for (Character popLetter: sortedMap.keySet()) {
             popLetterInText[index] = popLetter;
@@ -182,10 +174,11 @@ public class Cipher {
                 break;
             }
         }
-//        System.out.println(new String(popLetterInText));
         return popLetterInText;
     }
 
+    //Метод сделан для удобства пользователя при вводе ключа. Пользователь может написать что угодно, хоть лбом по клавиатуре ударить.
+    //Нехитрой манипуляцией получаем из текста какое-то целое число с которым и будет работать программа.
     public static int generateEncryptKey(String stringKey) throws IOException {
         char[] chars = stringKey.toCharArray();
         int key = 0;

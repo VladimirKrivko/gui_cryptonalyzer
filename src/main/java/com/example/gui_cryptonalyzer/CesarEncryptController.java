@@ -18,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -64,7 +65,7 @@ public class CesarEncryptController {
 
         cipherButton.setOnAction(event -> {
             if (Cipher.fileInputName == null) {
-                infoLabel.setTextFill(Color.RED);
+                infoLabel.setTextFill(Color.LIGHTGREEN);
                 infoLabel.setText("Не выбран текстовый файл.");
                 return;
             }
@@ -75,7 +76,7 @@ public class CesarEncryptController {
             }
             try {
                 Cipher.pushTextToFile(Cipher.encrypt(Cipher.getTextFromFile(Cipher.fileInputName)));
-                infoLabel.setTextFill(Color.GREEN);
+                infoLabel.setTextFill(Color.LIGHTGREEN);
                 infoLabel.setText("Зашифрованный файл сохранен по адресу: " + Cipher.fileOutputName);
 
                 Cipher.fileInputName = null;
@@ -101,7 +102,7 @@ public class CesarEncryptController {
                     } catch (IOException e) {
                         enterCodeLabel.setText("Ключ не принят!");
                     }
-                    enterCodeLabel.setTextFill(Color.GREEN);
+                    enterCodeLabel.setTextFill(Color.LIGHTGREEN);
                     enterCodeLabel.setText("Ключ принят!    " + stringKey);
                     // можно в конце почистить текст
                     enterCodeButton.setText("");
@@ -119,7 +120,7 @@ public class CesarEncryptController {
                 Cipher.fileInputName = file.getAbsolutePath();
                 Cipher.setFileOutputName(Cipher.fileInputName);
 
-                choiceFileLabel.setTextFill(Color.GREEN);
+                choiceFileLabel.setTextFill(Color.LIGHTGREEN);
                 choiceFileLabel.setText("Файл выбран: " + Cipher.fileInputName);
             } catch (Exception e) {
                 choiceFileLabel.setText("Файл не выбран!");
