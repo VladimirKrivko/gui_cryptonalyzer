@@ -56,7 +56,7 @@ public class BruteForceController {
                 return;
             }
             try {
-                Cipher.pushTextToFile(Cipher.bruteForce(Cipher.getTextFromFile(Cipher.fileInputName), ", "));
+                Cipher.pushTextToFile(Cipher.bruteForce(Cipher.getTextFromFile(Cipher.fileInputName)));
                 infoLabel.setTextFill(Color.GREEN);
                 infoLabel.setText("Зашифрованный файл сохранен по адресу: " + Cipher.fileOutputName);
 

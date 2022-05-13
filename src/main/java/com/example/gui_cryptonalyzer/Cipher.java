@@ -75,10 +75,11 @@ public class Cipher {
         return new String(result);
     }
 
-    //Метод BruteForce делает смещение текста на 1 и подсчитывает колличество вхождений ", "
-    //Ключ при котором было максимальное колличество вхождений ", " является правильным.
-    //Можно добавить еще критерии отбора, но и этого достаточно. Даже одного пробела будет достаточно.
-    public static String bruteForce(String inputText, String popularLetter) throws IOException {
+    //Метод BruteForce делает смещение текста на 1 и подсчитывает сумму вхождений ", " и " ".
+    //Ключ при котором было максимальное сумма вхождений является правильным.
+    //Даже одного пробела будет достаточно. А в случае если ваш текст состоит из одного предложения не содержащего запятых, это будет верным решением.
+    //Можно добавить еще критерии отбора, но на мой взгляд этого достаточно (в данных условиях).
+    public static String bruteForce(String inputText) throws IOException {
 
         int decryptKey = 0;
         int maxNumberOfRepetitions = 0;
@@ -90,8 +91,11 @@ public class Cipher {
             text = encrypt(inputText);
 
             //Количество повторений паттерна ", " в потенциально расшифрованном тексте.
-            int numberOfRepetitions = countFragmentInText(text, popularLetter);
+            int numberOfRepetitions_1 = countFragmentInText(text, ", ");
+            //Количество повторений пробела в потенциально расшифрованном тексте. На случай описанный в шапке метода.
+            int numberOfRepetitions_2 = countFragmentInText(text, " ");
 
+            int numberOfRepetitions = numberOfRepetitions_1 + numberOfRepetitions_2;
             //Если нашли больше повторений, то и ключик (текущий encryptKey) надо записать.
             if (numberOfRepetitions > maxNumberOfRepetitions) {
                 maxNumberOfRepetitions = numberOfRepetitions;
@@ -104,6 +108,9 @@ public class Cipher {
 
     //Метод возвращает ключ при котором самые популярные шифрованные буквы текста становятся самыми популярными буквами открытого текста.
     //Если не загружать другой текст того же автора, то в popLettersOpenTextAuthor передается стандартная частотность букв " оеаинтсрвл".
+    //Метод чувствителен к объему текста, так как частотную статистику надо собирать с некоторого обьема. В коротких же текстах будет своя частная статистика,
+    // которую сложно предсказать. Но если дополнительно добавить этот же короткий открытый текст, то метод соберет эту частную недостатистику и расшифрует верно.
+    //В общем текст должен содержать около 250 символов (входящих в alphabetRus).
     public static int statAnal(char[] popLettersOpenTextAuthor, char[] popLettersCipherText) throws IOException {
         //Массив под каждый потенциальный ключ.
         int[] keys = new int[popLettersOpenTextAuthor.length];
