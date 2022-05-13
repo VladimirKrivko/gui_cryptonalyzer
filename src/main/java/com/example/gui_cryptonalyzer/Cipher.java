@@ -16,6 +16,8 @@ public class Cipher {
 
     //Первые 11 самых популярных букв русского алфавита в порядке убывания согласно статьи "Частотность" Википедия.
     //Пробел включен по условию и является самым популярным символом практически любого языка.
+    //11 символов потому что дальше разница в частоте использования букв минимальная, а значт в теории может увеличится количество ошибок.
+    //11 это хорошо, вроде как работает))
     public static char[] popLetterRus = " оеаинтсрвл".toCharArray();
 
     //Метод задает путь исходящего файла рядом с исходным с припиской к имени "_CRYPT".
@@ -43,7 +45,7 @@ public class Cipher {
         }
     }
 
-    //Метод вохвращает шифрованный текст, смещение происходит по ключу записанному в статическую переменную encryptKey.
+    //Метод возвращает шифрованный текст, смещение происходит по ключу записанному в статическую переменную encryptKey.
     public static String encrypt(String inputText) throws IOException {
 
         char[] text = inputText.toCharArray();
@@ -55,7 +57,10 @@ public class Cipher {
             isAdded = false;
             for (int j = 0; j < alphabetRus.length; j++) {
                 if (text[i] == alphabetRus[j]) {
+                    //Чтобы индекс не вылетал за пределы массива заданного алфавита берем остаток от деления на длину алфавита.
+                    //Тогда все индексы что меньше длины массива алфавита останутся неизменными, а те что больше "пойдут на второй круг".
                     int index = (j + encryptKey) % alphabetRus.length;
+                    //На тот случай если encryptKey отрицательный.
                     if (index < 0) {
                         index += alphabetRus.length;
                     }
@@ -72,23 +77,24 @@ public class Cipher {
 
     //Метод BruteForce делает смещение текста на 1 и подсчитывает колличество вхождений ", "
     //Ключ при котором было максимальное колличество вхождений ", " является правильным.
-    //Можно добавить еще критерии отбора, но и этого достаточно.
+    //Можно добавить еще критерии отбора, но и этого достаточно. Даже одного пробела будет достаточно.
     public static String bruteForce(String inputText, String popularLetter) throws IOException {
 
         int decryptKey = 0;
-        int marker = 0;
+        int maxNumberOfRepetitions = 0;
         String text;
 
         while (encryptKey < alphabetRus.length) {
-
+            //Статическая переменная по умолчанию инициализируется нулем.
             encryptKey++;
-
             text = encrypt(inputText);
 
-            int countMarker = countFragmentInText(text, popularLetter);
+            //Количество повторений паттерна ", " в потенциально расшифрованном тексте.
+            int numberOfRepetitions = countFragmentInText(text, popularLetter);
 
-            if (countMarker > marker) {
-                marker = countMarker;
+            //Если нашли больше повторений, то и ключик (текущий encryptKey) надо записать.
+            if (numberOfRepetitions > maxNumberOfRepetitions) {
+                maxNumberOfRepetitions = numberOfRepetitions;
                 decryptKey = encryptKey;
             }
         }
@@ -99,22 +105,22 @@ public class Cipher {
     //Метод возвращает ключ при котором самые популярные шифрованные буквы текста становятся самыми популярными буквами открытого текста.
     //Если не загружать другой текст того же автора, то в popLettersOpenTextAuthor передается стандартная частотность букв " оеаинтсрвл".
     public static int statAnal(char[] popLettersOpenTextAuthor, char[] popLettersCipherText) throws IOException {
-
+        //Массив под каждый потенциальный ключ.
         int[] keys = new int[popLettersOpenTextAuthor.length];
         int indexAlphabet;
         for (int i = 0; i < popLettersCipherText.length; i++) {
-
-            for (indexAlphabet = 0; indexAlphabet < alphabetRus.length; indexAlphabet++) {      // получить индекс шифросимвола в массиве алфавита.
+            // получаю индекс шифросимвола в массиве алфавита.
+            for (indexAlphabet = 0; indexAlphabet < alphabetRus.length; indexAlphabet++) {
                 if (alphabetRus[indexAlphabet] == popLettersCipherText[i]) {
                     break;
                 }
             }
-
+            // ищу ключ при котором самая популярная шифрованная буква станет самой популярной буквой открытого текста.
             for (int j = indexAlphabet, count = 0; j < alphabetRus.length; j++, count++) {
                 if (popLettersOpenTextAuthor[i] != popLettersCipherText[i]) {
                     popLettersCipherText[i] = alphabetRus[j];
                     if (j == alphabetRus.length - 1) {
-                        j = -1;
+                        j = -1;     // -1 потому что нулевой индекс тоже проверить нужно, инкремент сделает 0.
                     }
                 } else {
                     keys[i] = count - 1;
