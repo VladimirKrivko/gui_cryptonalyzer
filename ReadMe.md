@@ -58,14 +58,14 @@ _*src/main/resources/TextSample*_
 ## Инструкция по эксплуатации:
 
 <h3 align="center">Главный экран (меню).</h3>
-<p align="center"><img  src="./ReadMe_Assets/main.png" width="30%"></p>
+<p align="center"><img  src="./ReadMe_Assets/main.png" width="40%"></p>
 
 &emsp; Выбор четырех опций, соответствующих заданиям. _**Encrypt**_ - шифровка по ключу. _**Decrypt**_ - расшифровка по ключу.
 _**BruteForce**_ - расшифровка без ключа. Frequency _**Analysis**_ - расшифровка методом статистического (частотного) анализа.
 
 
 <h3 align="center">Encrypt.</h3>
-<p align="center"><img  src="./ReadMe_Assets/encrypt.png" width="30%"></p>
+<p align="center"><img  src="./ReadMe_Assets/encrypt.png" width="40%"></p>
 
 1. Кнопка _**"назад"**_ - выход на главный экран (для всех методов).
 2. Кнопка _**"Выбери текстовый файл"**_ - открывает диалоговое окно выбора файлов (для всех методов).
@@ -78,7 +78,7 @@ _**BruteForce**_ - расшифровка без ключа. Frequency _**Analys
 
 
 <h3 align="center">Decrypt.</h3>
-<p align="center"><img  src="./ReadMe_Assets/decrypt.png" width="30%"></p>
+<p align="center"><img  src="./ReadMe_Assets/decrypt.png" width="40%"></p>
 
 1. Кнопка _**"назад"**_.
 2. Кнопка _**"Выбери текстовый файл"**_.
@@ -89,7 +89,7 @@ _**BruteForce**_ - расшифровка без ключа. Frequency _**Analys
 
 
 <h3 align="center">BruteForce.</h3>
-<p align="center"><img  src="./ReadMe_Assets/bruteForce.png" width="30%"></p>
+<p align="center"><img  src="./ReadMe_Assets/bruteForce.png" width="40%"></p>
 
 1. Кнопка _**"назад"**_.
 2. Кнопка _**"Выбери текстовый файл"**_.
@@ -99,7 +99,7 @@ _**BruteForce**_ - расшифровка без ключа. Frequency _**Analys
 
 
 <h3 align="center">Frequency Analysis.</h3>
-<p align="center"><img  src="./ReadMe_Assets/frequencyAnalysis.png" width="30%"></p>
+<p align="center"><img  src="./ReadMe_Assets/frequencyAnalysis.png" width="40%"></p>
 
 >&emsp; Частотный анализ является одним из методов статистического анализа данных." Лаборатория статистических исследований
 Кубанского государственного университета. http://www.statlab.kubsu.ru/node/4)
