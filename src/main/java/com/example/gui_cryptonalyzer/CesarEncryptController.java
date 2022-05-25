@@ -2,9 +2,10 @@ package com.example.gui_cryptonalyzer;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
+import com.example.logics.Encrypt;
+import com.example.logics.GenerateKey;
+import com.example.logics.IOTextFile;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,7 +19,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -26,13 +26,13 @@ public class CesarEncryptController {
 
     FileChooser chooser = new FileChooser();
 
+    IOTextFile ioTextFile;
+
+    Encrypt enc;
+
     String stringKey;
 
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
+    int key;
 
     @FXML
     private Button backButton;
@@ -64,30 +64,30 @@ public class CesarEncryptController {
     void initialize() {
 
         cipherButton.setOnAction(event -> {
-            if (Cipher.fileInputName == null) {
+            if (ioTextFile == null) {
                 infoLabel.setTextFill(Color.LIGHTGREEN);
                 infoLabel.setText("Не выбран текстовый файл.");
                 return;
             }
-            if (Cipher.encryptKey == 0) {
+            if (key == 0) {
                 infoLabel.setTextFill(Color.RED);
                 infoLabel.setText("Либо данный ключ не приведет к шифрованию, либо он не задан.");
                 return;
             }
             try {
-                Cipher.pushTextToFile(Cipher.encrypt(Cipher.getTextFromFile(Cipher.fileInputName)));
-                infoLabel.setTextFill(Color.LIGHTGREEN);
-                infoLabel.setText("Зашифрованный файл сохранен по адресу: " + Cipher.fileOutputName);
+                ioTextFile.pushTextToFile(new Encrypt(ioTextFile.getText(), key).encrypt());
 
-                Cipher.fileInputName = null;
+                infoLabel.setTextFill(Color.LIGHTGREEN);
+                infoLabel.setText("Зашифрованный файл сохранен по адресу: " + ioTextFile.getOutputPathFile());
+                ioTextFile = null;
                 choiceFileLabel.setTextFill(Color.RED);
                 choiceFileLabel.setText("Файл не выбран!");
-                Cipher.encryptKey = 0;
+                key = 0;
+                stringKey = null;
                 enterCodeLabel.setTextFill(Color.RED);
                 enterCodeLabel.setText("Ключ не принят!");
             } catch (IOException e) {
                 e.printStackTrace();
-                //throw new RuntimeException(e);
             }
         });
 
@@ -97,11 +97,8 @@ public class CesarEncryptController {
                 if (keyEvent.getCode() == KeyCode.ENTER)  {
                     stringKey = enterCodeButton.getText();
 
-                    try {
-                        Cipher.encryptKey = Cipher.generateEncryptKey(stringKey);
-                    } catch (IOException e) {
-                        enterCodeLabel.setText("Ключ не принят!");
-                    }
+                    key = GenerateKey.generateEncryptKey(stringKey);
+
                     enterCodeLabel.setTextFill(Color.LIGHTGREEN);
                     enterCodeLabel.setText("Ключ принят!    " + stringKey);
                     // можно в конце почистить текст
@@ -117,11 +114,10 @@ public class CesarEncryptController {
             chooser.getExtensionFilters().add(filter);
             try {
                 File file = chooser.showOpenDialog(new Stage());
-                Cipher.fileInputName = file.getAbsolutePath();
-                Cipher.setFileOutputName(Cipher.fileInputName);
+                ioTextFile = new IOTextFile(file.getAbsolutePath());
 
                 choiceFileLabel.setTextFill(Color.LIGHTGREEN);
-                choiceFileLabel.setText("Файл выбран: " + Cipher.fileInputName);
+                choiceFileLabel.setText("Файл выбран: " + ioTextFile.getInputPathFile());
             } catch (Exception e) {
                 choiceFileLabel.setText("Файл не выбран!");
             }

@@ -1,4 +1,8 @@
+/*
 package com.example.gui_cryptonalyzer;
+
+//Этот класс Cipher - первый вариант написания программы. Здесь все построено на статических методах, процедурно.
+//Удалить этот класс!!!
 
 import java.io.*;
 import java.util.*;
@@ -8,10 +12,6 @@ public class Cipher {
     public static String fileInputName;
     public static String fileOutputName;
     public static int encryptKey;
-
-    /*static final public char[] alphabetRus = {'A', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 'У'
-            , 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я', 'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л'
-            , 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я', '.', ' ', '"', ':', '-', '!', ',', '?'};*/
 
     static final public char[] alphabetRus = "AБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ-!,?абвгдеёжзийклмнопрстуфхцчшщъыьэюя. \":".toCharArray();
 
@@ -203,9 +203,10 @@ public class Cipher {
                 key -= chars[i];
             }
         }
-        if (key > Cipher.alphabetRus.length) {
-            key %= Cipher.alphabetRus.length;
+        if (key > alphabetRus.length) {
+            key %= alphabetRus.length;
         }
         return key;
     }
 }
+*/

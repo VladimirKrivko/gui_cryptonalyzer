@@ -13,4 +13,6 @@ module com.example.gui_cryptonalyzer {
 
     opens com.example.gui_cryptonalyzer to javafx.fxml;
     exports com.example.gui_cryptonalyzer;
+    exports com.example.logics;
+    opens com.example.logics to javafx.fxml;
 }
