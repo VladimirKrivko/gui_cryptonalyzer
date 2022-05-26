@@ -1,14 +1,19 @@
 package com.example.logics;
 
-public class Encrypt extends AlphabetCaesar {
+public class Encrypt extends AlphabetCaesar implements GenerateKey {
 
     private final String text;
 
     private final int key;
 
-    public Encrypt(String text, int key){
+    protected Encrypt(String text, int key){
         this.text = text;
         this.key = key;
+    }
+
+    public Encrypt(String text, String password) {
+        this.text = text;
+        this.key = generateEncryptKey(password);
     }
 
     public String encrypt() {

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import com.example.logics.Encrypt;
-import com.example.logics.GenerateKey;
 import com.example.logics.IOTextFile;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,11 +27,7 @@ public class CesarEncryptController {
 
     IOTextFile ioTextFile;
 
-    Encrypt enc;
-
-    String stringKey;
-
-    int key;
+    String password;
 
     @FXML
     private Button backButton;
@@ -69,21 +64,20 @@ public class CesarEncryptController {
                 infoLabel.setText("Не выбран текстовый файл.");
                 return;
             }
-            if (key == 0) {
+            if (password.equals("")) {
                 infoLabel.setTextFill(Color.RED);
                 infoLabel.setText("Либо данный ключ не приведет к шифрованию, либо он не задан.");
                 return;
             }
             try {
-                ioTextFile.pushTextToFile(new Encrypt(ioTextFile.getText(), key).encrypt());
+                ioTextFile.pushTextToFile(new Encrypt(ioTextFile.getText(), password).encrypt());
 
                 infoLabel.setTextFill(Color.LIGHTGREEN);
                 infoLabel.setText("Зашифрованный файл сохранен по адресу: " + ioTextFile.getOutputPathFile());
                 ioTextFile = null;
                 choiceFileLabel.setTextFill(Color.RED);
                 choiceFileLabel.setText("Файл не выбран!");
-                key = 0;
-                stringKey = null;
+                password = null;
                 enterCodeLabel.setTextFill(Color.RED);
                 enterCodeLabel.setText("Ключ не принят!");
             } catch (IOException e) {
@@ -94,13 +88,12 @@ public class CesarEncryptController {
         enterCodeButton.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER)  {
-                    stringKey = enterCodeButton.getText();
-
-                    key = GenerateKey.generateEncryptKey(stringKey);
-
-                    enterCodeLabel.setTextFill(Color.LIGHTGREEN);
-                    enterCodeLabel.setText("Ключ принят!    " + stringKey);
+                if (keyEvent.getCode() == KeyCode.ENTER) {
+                    if (!enterCodeButton.getText().equals("")) {
+                        password = enterCodeButton.getText();
+                        enterCodeLabel.setTextFill(Color.LIGHTGREEN);
+                        enterCodeLabel.setText("Ключ принят!    " + password);
+                    }
                     // можно в конце почистить текст
                     enterCodeButton.setText("");
                 }
@@ -119,6 +112,7 @@ public class CesarEncryptController {
                 choiceFileLabel.setTextFill(Color.LIGHTGREEN);
                 choiceFileLabel.setText("Файл выбран: " + ioTextFile.getInputPathFile());
             } catch (Exception e) {
+                choiceFileLabel.setTextFill(Color.RED);
                 choiceFileLabel.setText("Файл не выбран!");
             }
         });

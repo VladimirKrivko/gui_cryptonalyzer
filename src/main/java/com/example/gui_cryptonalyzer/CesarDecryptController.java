@@ -2,12 +2,8 @@ package com.example.gui_cryptonalyzer;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import com.example.logics.Decrypt;
-import com.example.logics.Encrypt;
-import com.example.logics.GenerateKey;
 import com.example.logics.IOTextFile;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -31,9 +27,7 @@ public class CesarDecryptController {
 
     IOTextFile ioTextFile;
 
-    String stringKey;
-
-    int key;
+    String password;
 
     @FXML
     private Button backButton;
@@ -70,21 +64,20 @@ public class CesarDecryptController {
                 infoLabel.setText("Не выбран текстовый файл.");
                 return;
             }
-            if (key == 0) {
+            if (password.equals("")) {
                 infoLabel.setTextFill(Color.RED);
                 infoLabel.setText("Либо данный ключ не приведет к шифрованию, либо он не задан.");
                 return;
             }
             try {
-                ioTextFile.pushTextToFile(new Decrypt(ioTextFile.getText(), key).decrypt());
+                ioTextFile.pushTextToFile(new Decrypt(ioTextFile.getText(), password).decrypt());
 
                 infoLabel.setTextFill(Color.GREEN);
                 infoLabel.setText("Зашифрованный файл сохранен по адресу: " + ioTextFile.getOutputPathFile());
                 ioTextFile = null;
                 choiceFileLabel.setTextFill(Color.RED);
                 choiceFileLabel.setText("Файл не выбран!");
-                key = 0;
-                stringKey = null;
+                password = null;
                 enterCodeLabel.setTextFill(Color.RED);
                 enterCodeLabel.setText("Ключ не принят!");
             } catch (IOException e) {
@@ -96,12 +89,11 @@ public class CesarDecryptController {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER)  {
-                    stringKey = enterCodeButton.getText();
-
-                    key = GenerateKey.generateEncryptKey(stringKey);
-
-                    enterCodeLabel.setTextFill(Color.GREEN);
-                    enterCodeLabel.setText("Ключ принят!    " + stringKey);
+                    if (!enterCodeButton.getText().equals("")) {
+                        password = enterCodeButton.getText();
+                        enterCodeLabel.setTextFill(Color.GREEN);
+                        enterCodeLabel.setText("Ключ принят!    " + password);
+                    }
                     // можно в конце почистить текст
                     enterCodeButton.setText("");
                 }
