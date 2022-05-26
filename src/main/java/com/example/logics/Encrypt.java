@@ -1,21 +1,48 @@
 package com.example.logics;
 
+/**
+ * @author Vladimir Krivko
+ * Класс Encrypt выполняет шифрование текста по целочисленнному значению.
+ * Наследует классу AlphabetCaesar и реализует интерфейс GenerateKey, чтобы скрыть преобразование строкового значения,
+ * которое вводит пользователь, к целочисленному значению.
+ */
 public class Encrypt extends AlphabetCaesar implements GenerateKey {
 
+    /**
+     * Поле хранящее String текст для шифрования.
+     */
     private final String text;
 
+    /**
+     * Поле хранящее int ключ по которому будет совершено шифрование.
+     */
     private final int key;
 
-    protected Encrypt(String text, int key){
+    /**
+     * protected Конструктор класса, потому что доступ к нему понадобится только в этом пакете.
+     *
+     * @param text принимает открытый текст для шифрования.
+     * @param key  принимает ключ по которому будет совершено шифрование.
+     */
+    protected Encrypt(String text, int key) {
         this.text = text;
         this.key = key;
     }
 
+    /**
+     * Основной Конструктор класса для пользователя.
+     *
+     * @param text     принимает открытый текст для шифрования.
+     * @param password принимает любое строковое значение, которое при инициализации переменной key конвертируется в целочисленное значение.
+     */
     public Encrypt(String text, String password) {
         this.text = text;
         this.key = generateEncryptKey(password);
     }
 
+    /**
+     * @return Возвращает шифрованный текст, смещение происходит по ключу записанному в переменную key.
+     */
     public String encrypt() {
 
         char[] text = this.text.toCharArray();
