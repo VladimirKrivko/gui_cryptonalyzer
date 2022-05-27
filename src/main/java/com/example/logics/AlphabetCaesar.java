@@ -10,6 +10,10 @@ public class AlphabetCaesar {
      */
     private static char[] alphabetCipher = "AБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ-!,?абвгдеёжзийклмнопрстуфхцчшщъыьэюя. \":".toCharArray();
 
+    /**
+     * Геттер поля alphabetCipher.
+     * @return массив char с алфавитом шифрования в данный момент.
+     */
     public static char[] getAlphabetCipher() {
         return alphabetCipher;
     }

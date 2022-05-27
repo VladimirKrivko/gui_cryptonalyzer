@@ -8,7 +8,7 @@ import java.io.IOException;
 public class IOTextFile {
     private final String inputPathFile;
     private final String outputPathFile;
-    private final String text;        //мож быть final?
+    private final String text;
 
 
     public IOTextFile(String inputPathFile) throws IOException {
