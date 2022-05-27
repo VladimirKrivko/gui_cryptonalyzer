@@ -1,12 +1,14 @@
-/*
 package com.example.gui_cryptonalyzer;
-
-//Этот класс Cipher - первый вариант написания программы. Здесь все построено на статических методах, процедурно.
-//Удалить этот класс!!!
 
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
+
+/**
+ * @author Vladimir Krivko
+ * Этот класс Cipher - первый вариант написания программы. Здесь все построено на статических методах, процедурно.
+ * @deprecated В данный момент он никак не используется и не рекомендуется поскольку полностью открыт и не скрывает свои данные!
+ */
 
 public class Cipher {
     public static String fileInputName;
@@ -22,7 +24,7 @@ public class Cipher {
     public static char[] popLetterRus = " оеаинтсрвл".toCharArray();
 
     //Метод задает путь исходящего файла рядом с исходным с припиской к имени "_CRYPT".
-    public static void setFileOutputName (String fileInputName) {
+    public static void setFileOutputName(String fileInputName) {
         fileOutputName = fileInputName.substring(0, fileInputName.lastIndexOf(".")) +
                 "_CRYPT" + fileInputName.substring(fileInputName.lastIndexOf("."));
     }
@@ -163,7 +165,7 @@ public class Cipher {
     //Метод находит 11 самых популярных букв в тексте в порядке убывания.
     //Компаратор для HashMap сам не написал, нашел на просторах интернетов.
     //В Мапу добавляется ключ-буква и значение-количество ее повторения в тексте. Мапа сортируется в порядке убывания по значению.
-    public static char[] frequencyOfLetters (String inputText) {
+    public static char[] frequencyOfLetters(String inputText) {
         char[] popLetterInText = new char[11];
 
         Map<Character, Integer> unsortedMap = new HashMap<>();
@@ -181,7 +183,7 @@ public class Cipher {
                         LinkedHashMap::new
                 ));
         int index = 0;
-        for (Character popLetter: sortedMap.keySet()) {
+        for (Character popLetter : sortedMap.keySet()) {
             popLetterInText[index] = popLetter;
             index++;
             if (index >= 11) {
@@ -209,4 +211,3 @@ public class Cipher {
         return key;
     }
 }
-*/

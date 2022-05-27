@@ -6,8 +6,15 @@ package com.example.logics;
  */
 public class AlphabetCaesar {
     /**
-     * Переменная хранящая ссылку на массив char с алфавитом шифрования.
+     * Переменная хранящая ссылку на массив char с алфавитом шифрования. Не final потому что в будущем хочу реализовать изменение алфавита шифрования, либо выбор из заготовленных алфавитов.
      */
-    protected static char[] alphabetCipher = "AБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ-!,?абвгдеёжзийклмнопрстуфхцчшщъыьэюя. \":".toCharArray();
+    private static char[] alphabetCipher = "AБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ-!,?абвгдеёжзийклмнопрстуфхцчшщъыьэюя. \":".toCharArray();
 
+    public static char[] getAlphabetCipher() {
+        return alphabetCipher;
+    }
+
+    /*public static void setAlphabetCipher(char[] alphabetCipher) {
+        alphabetCipher = alphabetCipher;
+    }*/
 }

@@ -64,7 +64,7 @@ public class CesarEncryptController {
                 infoLabel.setText("Не выбран текстовый файл.");
                 return;
             }
-            if (password.equals("")) {
+            if (null == password || password.equals("")) {
                 infoLabel.setTextFill(Color.RED);
                 infoLabel.setText("Либо данный ключ не приведет к шифрованию, либо он не задан.");
                 return;

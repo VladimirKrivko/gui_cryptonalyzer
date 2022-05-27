@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class StaticAnalysis extends AlphabetCaesar {
 
+    private final char[] currentAlphabet = AlphabetCaesar.getAlphabetCipher();
+
     private final String text;
 
     private char[] popLetterRus = " оеаинтсрвл".toCharArray();
@@ -33,16 +35,16 @@ public class StaticAnalysis extends AlphabetCaesar {
         int indexAlphabet;
         for (int i = 0; i < popLettersCipherText.length; i++) {
             // получаю индекс шифросимвола в массиве алфавита.
-            for (indexAlphabet = 0; indexAlphabet < alphabetCipher.length; indexAlphabet++) {
-                if (alphabetCipher[indexAlphabet] == popLettersCipherText[i]) {
+            for (indexAlphabet = 0; indexAlphabet < currentAlphabet.length; indexAlphabet++) {
+                if (currentAlphabet[indexAlphabet] == popLettersCipherText[i]) {
                     break;
                 }
             }
             // ищу ключ при котором самая популярная шифрованная буква станет самой популярной буквой открытого текста.
-            for (int j = indexAlphabet, count = 0; j < alphabetCipher.length; j++, count++) {
+            for (int j = indexAlphabet, count = 0; j < currentAlphabet.length; j++, count++) {
                 if (popLettersOpenTextAuthor[i] != popLettersCipherText[i]) {
-                    popLettersCipherText[i] = alphabetCipher[j];
-                    if (j == alphabetCipher.length - 1) {
+                    popLettersCipherText[i] = currentAlphabet[j];
+                    if (j == currentAlphabet.length - 1) {
                         j = -1;     // -1 потому что нулевой индекс тоже проверить нужно, инкремент сделает 0.
                     }
                 } else {
@@ -74,8 +76,8 @@ public class StaticAnalysis extends AlphabetCaesar {
         char[] popLetterInText = new char[11];
 
         Map<Character, Integer> unsortedMap = new HashMap<>();
-        for (int i = 0; i < alphabetCipher.length; i++) {
-            unsortedMap.put(alphabetCipher[i], countFragmentInText(inputText, String.valueOf(alphabetCipher[i])));
+        for (int i = 0; i < currentAlphabet.length; i++) {
+            unsortedMap.put(currentAlphabet[i], countFragmentInText(inputText, String.valueOf(currentAlphabet[i])));
         }
         Map<Character, Integer> sortedMap = unsortedMap.entrySet().stream()
                 .sorted(Comparator.comparingInt(e -> -e.getValue()))

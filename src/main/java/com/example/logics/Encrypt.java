@@ -6,7 +6,9 @@ package com.example.logics;
  * Наследует классу AlphabetCaesar и реализует интерфейс GenerateKey, чтобы скрыть преобразование строкового значения,
  * которое вводит пользователь, к целочисленному значению.
  */
-public class Encrypt extends AlphabetCaesar implements GenerateKey {
+public class Encrypt implements GenerateKey {
+
+    private final char[] currentAlphabet = AlphabetCaesar.getAlphabetCipher();
 
     /**
      * Поле хранящее String текст для шифрования.
@@ -52,16 +54,16 @@ public class Encrypt extends AlphabetCaesar implements GenerateKey {
 
         for (int i = 0; i < text.length; i++) {
             isAdded = false;
-            for (int j = 0; j < alphabetCipher.length; j++) {
-                if (text[i] == alphabetCipher[j]) {
+            for (int j = 0; j < currentAlphabet.length; j++) {
+                if (text[i] == currentAlphabet[j]) {
                     //Чтобы индекс не вылетал за пределы массива заданного алфавита берем остаток от деления на длину алфавита.
                     //Тогда все индексы что меньше длины массива алфавита останутся неизменными, а те что больше "пойдут на второй круг".
-                    int index = (j + key) % alphabetCipher.length;
+                    int index = (j + key) % currentAlphabet.length;
                     //На тот случай если encryptKey отрицательный.
                     if (index < 0) {
-                        index += alphabetCipher.length;
+                        index += currentAlphabet.length;
                     }
-                    result[i] = alphabetCipher[index];
+                    result[i] = currentAlphabet[index];
                     isAdded = true;
                 }
             }

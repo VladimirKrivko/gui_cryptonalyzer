@@ -2,6 +2,8 @@ package com.example.logics;
 
 public class BruteForce extends AlphabetCaesar {
 
+    private final char[] currentAlphabet = AlphabetCaesar.getAlphabetCipher();
+
     private final String text;
     private int encryptKey;
 
@@ -20,7 +22,7 @@ public class BruteForce extends AlphabetCaesar {
         String text;
         Decrypt temp;
 
-        while (encryptKey < alphabetCipher.length) {
+        while (encryptKey < currentAlphabet.length) {
             //Статическая переменная по умолчанию инициализируется нулем.
             temp = new Decrypt(this.text, ++encryptKey);
             text = temp.decrypt();
