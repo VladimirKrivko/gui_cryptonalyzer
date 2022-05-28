@@ -2,21 +2,21 @@ package com.example.logics;
 
 /**
  * @author Vladimir Krivko
- * Интерфейс GenerateKey описывает преобразование строки к целочисленному значению. Содержит единственный метод int generateEncryptKey(String password) с реализацией по умолчанию.
+ * Класс GenerateKey описывает преобразование строки к целочисленному значению. Содержит единственный метод int generateEncryptKey(String password).
  */
-public interface GenerateKey {
+class GenerateKey {
 
     /**
      * Массив char с алфавитом шифрования в данный момент.
      */
-    char[] currentAlphabet = AlphabetCaesar.getAlphabetCipher();
+    private final char[] currentAlphabet = AlphabetCaesar.getAlphabetCipher();
 
     /**
      * метод реализующий преобразование строки к целочисленному значению.
      * @param password принимает на вход любое строковое значение, которое пользователь введет в поле "Введи код и нажми ENTER".
      * @return возвращает какое-то целочисленное значение согласно алгоритму, которое в последствии станет реальным ключом шифрования (смещения).
      */
-    default int generateEncryptKey(String password) {
+    public int generateEncryptKey(String password) {
         char[] chars = password.toCharArray();
         int key = 0;
         for (int i = 0; i < chars.length; i++) {

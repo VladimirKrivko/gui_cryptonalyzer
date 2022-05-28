@@ -2,10 +2,9 @@ package com.example.logics;
 
 /**
  * @author Vladimir Krivko
- * Класс Encrypt выполняет шифрование текста по целочисленнному значению.
- * Реализует интерфейс GenerateKey, чтобы скрыть преобразование строкового значения, которое вводит пользователь, к целочисленному значению.
+ * Класс Encrypt выполняет шифрование текста по целочисленному значению.
  */
-public class Encrypt implements GenerateKey {
+public class Encrypt {
 
     /**
      * Массив char с алфавитом шифрования в данный момент. Инициализация происходит в момент создания объекта.
@@ -41,7 +40,7 @@ public class Encrypt implements GenerateKey {
      */
     public Encrypt(String text, String password) {
         this.text = text;
-        this.key = generateEncryptKey(password);
+        this.key = new GenerateKey().generateEncryptKey(password);
     }
 
     /**

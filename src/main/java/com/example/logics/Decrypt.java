@@ -2,10 +2,9 @@ package com.example.logics;
 
 /**
  * @author Vladimir Krivko
- * Класс Decrypt выполняет дешифрование текста по целочисленнному значению.
- * Реализует интерфейс GenerateKey, чтобы скрыть преобразование строкового значения, которое вводит пользователь, к целочисленному значению.
+ * Класс Decrypt выполняет дешифрование текста по целочисленному значению.
  */
-public class Decrypt implements GenerateKey {
+public class Decrypt {
 
     /**
      * Поле хранящее int ключ по которому будет совершено дешифрование.
@@ -36,7 +35,7 @@ public class Decrypt implements GenerateKey {
      * @param password Принимает любое строковое значение, которое при инициализации переменной key конвертируется в целочисленное значение со знаком "-".
      */
     public Decrypt(String text, String password) {
-        key = -generateEncryptKey(password);
+        key = -new GenerateKey().generateEncryptKey(password);
         enc = new Encrypt(text, key);
     }
 
