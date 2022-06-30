@@ -7,7 +7,7 @@ import java.io.IOException;
 
 /**
  * @author Vladimir Krivko
- * Класс IOTextFile утилитарный, служит для получения текста из файла и сохранения текста в новый файл.
+ * Класс IOTextFile служит для получения текста из файла, его хранения и сохранения в новый файл.
  */
 public class IOTextFile {
     /**

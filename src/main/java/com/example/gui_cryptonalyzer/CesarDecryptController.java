@@ -1,8 +1,5 @@
 package com.example.gui_cryptonalyzer;
 
-import java.io.File;
-import java.io.IOException;
-
 import com.example.logics.Decrypt;
 import com.example.logics.IOTextFile;
 import javafx.event.ActionEvent;
@@ -20,6 +17,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
 
 public class CesarDecryptController {
 

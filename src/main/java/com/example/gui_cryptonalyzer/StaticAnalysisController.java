@@ -1,10 +1,5 @@
 package com.example.gui_cryptonalyzer;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.example.logics.IOTextFile;
 import com.example.logics.StaticAnalysis;
 import javafx.event.ActionEvent;
@@ -18,6 +13,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.IOException;
 
 public class StaticAnalysisController {
 
